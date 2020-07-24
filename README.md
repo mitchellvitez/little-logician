@@ -79,3 +79,28 @@ We can output that this goal obtains:
 ```
 a, a → b ⊢ b  obtains
 ```
+
+## Notes on Notation
+
+Variable names must start with a letter, but can then contain any combination of letters, digits, `_`, and `'`.
+
+There are many options for how to notate each logical connective, so you can pick what you like, ranging from mathy to easy-to-type to englishy. You can even mix and match. LL will respect your decisions and output your proofs exactly as you entered them.
+
+The numbers in parentheses are precedence levels: higher number means higher precedence.
+
+- negation (3)<br>
+  `¬`, `~`, `not`
+- truth<br>
+  `T`, `True`, `true`
+- falsehood<br>
+  `F`, `False`, `false`
+- and (2)<br>
+  `∧`, `&`, `and`
+- or (1)<br>
+  `∨`, `|`, `or`
+- implication (0)<br>
+  `→`, `→`, `->`, `implies`
+- biconditional<br>
+  `↔`, `⇔`, `<->`, `iff`
+- turnstile<br>
+  `⊢`, `|-`, `proves`, `leads to`
