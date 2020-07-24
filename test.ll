@@ -9,6 +9,7 @@ a ∧ b, b ∧ ¬c ⊢ a ∧ ¬c            ;
 a ∧ b, b ∧ ¬c ⊢ a ∧ c             ;
 a → b → a ⊢ a                     ;
 a → b ∧ b → c, a ⊢ c              ;
+(a → b) ∧ (b → c), a ⊢ c          ;
 a ↔ ¬a ⊢ F                        ;
 a ↔ ¬a ⊢ b                        ;
 A and B and (not A or B) proves A ;

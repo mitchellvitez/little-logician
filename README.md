@@ -41,11 +41,12 @@ a ∧ b, b ∧ ¬c ⊢ a ∧ ¬c             obtains
 a ∧ b, b ∧ ¬c ⊢ a ∧ c              does not obtain
 a → b → a ⊢ a                      does not obtain
 a → b ∧ b → c, a ⊢ c               does not obtain
+(a → b) ∧ (b → c), a ⊢ c           obtains
 a ↔ ¬a ⊢ F                         obtains
 a ↔ ¬a ⊢ b                         obtains
 A and B and (not A or B) proves A  obtains
 A and B iff not B leads to A       does not obtain
-8 out of 15 goals obtained
+9 out of 16 goals obtained
 ```
 
 ## How it works
@@ -107,7 +108,7 @@ The numbers in parentheses are precedence levels: higher number means higher pre
 
 ## Annotated examples
 
-You can view fairly extensively annotated examples by adding the `write` argument, e.g. `stack run test.log write`
+You can view fairly extensively annotated examples by adding the `write` argument, e.g. `stack run test.ll write`
 
 Here's one example. As always, we're implicitly trying to prove `False`. We view the current environment as a list of propositions, reading from left to right. "Cycling" means that we're moving the current term to the back of the list, so we can examine the next term.
 
