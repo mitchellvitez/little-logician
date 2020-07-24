@@ -7,7 +7,7 @@ the propositions thus.&rdquo;
 
 ## What it is
 
-Little Logician (henceforth, LL) is a tiny proof system for classical propositional logic. For example, say I want to prove that (not b) follows from (b). Here's that "proof" in LL:
+Little Logician (henceforth, LL) is a tiny proof system for classical propositional logic. For example, say I want to prove that (not b) follows from (b). Here's that "proof" in a form LL can read:
 
 ```
 b ⊢ ¬b
@@ -21,7 +21,7 @@ Here's a slightly more complicated example. We're now using the logical connecti
 a ∧ b, b ∧ ¬c ⊢ a ∧ ¬c
 ```
 
-We could read the above proof as "a and b, (along with) b and not c, leads to a and not c".  In fact, LL's notation is flexible enough that we can pretty much just write that down:
+We could read the above proof as "a and b, (along with) b and not c, leads to a and not c".  In fact, LL's allowed notation is flexible enough that we can pretty much just write that down:
 
 ```
 a and b, b and not c leads to a and not c
@@ -100,7 +100,7 @@ The numbers in parentheses are precedence levels: higher number means higher pre
   `∨`, `|`, `or`
 - implication (0)<br>
   `→`, `→`, `->`, `implies`
-- biconditional<br>
+- biconditional (0)<br>
   `↔`, `⇔`, `<->`, `iff`
 - turnstile<br>
   `⊢`, `|-`, `proves`, `leads to`
