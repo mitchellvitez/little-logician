@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: a253aefd0d9ee60a5394537ef21fd4b233b4a87101c651e38befd6888751b92f
+-- hash: 92bce0e5c61b0d0d518914107b46eab638922609b56182c99e95908cdb7730d2
 
 name:           little-logician
 version:        0.1.0.0
@@ -39,6 +39,7 @@ library
     , containers >=0.6 && <1
     , hspec >=2.7 && <3
     , megaparsec >=8.0 && <9
+    , mtl >=2.2 && <3
     , text >=1.2 && <2
     , transformers >=0.5 && <1
   default-language: Haskell2010
@@ -57,6 +58,7 @@ executable little-logician-exe
     , hspec >=2.7 && <3
     , little-logician
     , megaparsec >=8.0 && <9
+    , mtl >=2.2 && <3
     , text >=1.2 && <2
     , transformers >=0.5 && <1
   default-language: Haskell2010

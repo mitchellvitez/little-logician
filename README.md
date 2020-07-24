@@ -104,3 +104,31 @@ The numbers in parentheses are precedence levels: higher number means higher pre
   `↔`, `⇔`, `<->`, `iff`
 - turnstile<br>
   `⊢`, `|-`, `proves`, `leads to`
+
+## Annotated examples
+
+You can view fairly extensively annotated examples by adding the `write` argument, e.g. `stack run test.log write`
+
+Here's one example. As always, we're implicitly trying to prove `False`. We view the current environment as a list of propositions, reading from left to right. "Cycling" means that we're moving the current term to the back of the list, so we can examine the next term.
+
+In this example, we split into two cases on an Or. When you see "proof complete!" after that, that means the proof of the currently-being-examined case is complete. Because we're proving contradictions, it's possible to have one case with a completed proof, and still have the overall goal fail to obtain. Otherwise, for example, every environment with implications like `a, a→b` would be rewritten as `a, ¬a ∨ b`, and invalidly seem complete once the first (trivial) case of the or completed.
+
+```
+¬b, a, ¬a ∨ b
+not var, cycling
+a, ¬a ∨ b, ¬b
+variable, cycling
+¬a ∨ b, ¬b, a
+or, splitting into cases
+¬a, ¬b, a
+found contradiction, proof complete!
+¬a ∨ b, ¬b, a
+second case of or
+b, ¬b, a
+variable, cycling
+¬b, a, b
+found contradiction, proof complete!
+a, a → b ⊢ b  obtains
+```
+
+The annotation was done by simply dropping a `Writer` monad on top of `reduce`, so it's a little messy. But hopefully it makes it easier to follow along with exactly what LL is doing when it tries to prove something.

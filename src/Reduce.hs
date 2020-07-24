@@ -5,9 +5,14 @@ import Control.Monad.Trans.Writer.Lazy (Writer, tell)
 import Data.Set (Set, member)
 import qualified Data.Set as Set
 import Data.Traversable
+import Data.Text (Text)
+import qualified Data.Text as T
 
 pipeline :: Goal -> Bool
 pipeline = reduce 0 . normalize
+
+wpipeline :: Goal -> Writer Text Bool
+wpipeline = wreduce 0 . normalize
 
 -- p and q -> r = p and q and ~r -> false
 normalize :: Goal -> [Prop]
@@ -65,6 +70,61 @@ reduce _ (Iff _ _ : _) = iffError
 
 impliesError = error "unexpected implication in reduce"
 iffError = error "unexpected biconditional in reduce"
+
+-- a version of reduce that tells you what it's up to
+-- same as the above, but with a Writer for heavy/messy annotating
+wreduce :: Int -> [Prop] -> Writer Text Bool
+wreduce n l@(var@(Var _) : rest)
+  | n > length l = t l >> tell "hit recursion limit\n" >> pure False
+  | otherwise = t l >> tell "variable, cycling\n" >> wreduce (n+1) (rest <> [var])
+wreduce n l@(PropTrue : rest) = t l >> tell "literal True, ignoring\n" >> wreduce (n+1) rest
+wreduce _ l@(PropFalse : _) = t l >> tell "literal False, proof complete!\n" >> pure True
+wreduce n l@(And p q : rest) = t l >> tell "and, adding parts to env\n" >> wreduce 0 (p : q : rest)
+wreduce n l@(Or p q : rest) = do
+  t l >> tell "or, splitting into cases\n"
+  a <- wreduce 0 (p : rest)
+  t l >> tell "second case of or\n"
+  b <- wreduce 0 (q : rest)
+  pure (a && b)
+wreduce n l@(Not p : rest)
+  | n > length l = t l >> tell "hit recursion limit\n" >> pure False
+  | p `elem` rest = t l >> tell ("found contradiction, proof complete!\n") >> pure True
+  | otherwise = case p of
+      PropTrue -> t l >> tell "not True, proof complete!\n" >> pure True
+      PropFalse -> t l >> tell "not False, continuing\n" >> wreduceRest
+      And p q ->
+        t l >> tell "not and, applying demorgan's law\n" >>
+        wreduce 0 (Or (Not p) (Not q) : rest)
+      Or p q ->
+        t l >> tell "not or, applying demorgan's law\n" >>
+        wreduce 0 (And (Not p) (Not q) : rest)
+      Not p -> t l >> tell "double negation, canceling\n" >> wreduce 0 (p : rest)
+      Var x -> t l >> tell "not var, cycling\n" >> wreduceRest
+      Implies _ _ -> impliesError
+      Iff _ _ -> iffError
+      where wreduceRest =
+              wreduce (n+1) $ rest <> [Not p]    -- cycle through
+wreduce _ (Implies _ _ : _) = impliesError
+wreduce _ (Iff _ _ : _) = iffError
+
+t :: [Prop] -> Writer Text ()
+t props = tell $ display (Goal props PropFalse)
+
+display :: Goal -> Text
+display (Goal props concl) = T.concat
+  [ T.intercalate ", " (map displayProp props)
+  , "\n"
+  ]
+
+displayProp :: Prop -> Text
+displayProp (Var x)       = x
+displayProp PropTrue      = "T"
+displayProp PropFalse     = "F"
+displayProp (Or p q)      = displayProp p <> " ∨ " <> displayProp q
+displayProp (And p q)     = displayProp p <> " ∧ " <> displayProp q
+displayProp (Not p)       = "¬" <> displayProp p
+displayProp (Implies p q) = displayProp p <> " → " <> displayProp q
+displayProp (Iff p q)     = displayProp p <> " ↔ " <> displayProp q
 
 -- for circuit building at some later time
 -- TODO: graphviz circuits?
