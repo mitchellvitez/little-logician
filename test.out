@@ -1,0 +1,16 @@
+a, a → ¬b ⊢ b                      does not obtain
+a, a → b ⊢ b                       obtains
+a, a → b ⊢ a ∨ b                   obtains
+b ⊢ ¬b                             does not obtain
+a ∧ b ∧ ¬a ∨ b ⊢ a                 obtains
+¬b ↔ a ∧ b ⊢ a                     does not obtain
+a ∧ b, b ∧ ¬c ⊢ a ∨ c              obtains
+a ∧ b, b ∧ ¬c ⊢ a ∧ ¬c             obtains
+a ∧ b, b ∧ ¬c ⊢ a ∧ c              does not obtain
+a → b → a ⊢ a                      does not obtain
+a → b ∧ b → c, a ⊢ c               does not obtain
+a ↔ ¬a ⊢ F                         obtains
+a ↔ ¬a ⊢ b                         obtains
+A and B and (not A or B) proves A  obtains
+A and B iff not B leads to A       does not obtain
+8 out of 15 goals obtained

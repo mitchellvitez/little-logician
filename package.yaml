@@ -1,0 +1,38 @@
+name:                little-logician
+version:             0.1.0.0
+github:              "mitchellvitez/little-logician"
+license:             BSD3
+author:              "Mitchell Vitez"
+maintainer:          "mitchell@vitez.me"
+copyright:           "2020 Mitchell Vitez"
+
+extra-source-files:
+- README.md
+
+description:         Please see the README on GitHub at <https://github.com/mitchellvitez/little-logician#readme>
+
+dependencies:
+- base         >= 4.7 && < 5
+- text         >= 1.2 && < 2
+- megaparsec   >= 8.0 && < 9
+- hspec        >= 2.7 && < 3
+- transformers >= 0.5 && < 1
+- containers   >= 0.6 && < 1
+
+library:
+  source-dirs: src
+
+executables:
+  little-logician-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - little-logician
+
+default-extensions:
+  - OverloadedStrings
+  - LambdaCase

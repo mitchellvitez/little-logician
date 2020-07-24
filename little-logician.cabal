@@ -1,0 +1,62 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: a253aefd0d9ee60a5394537ef21fd4b233b4a87101c651e38befd6888751b92f
+
+name:           little-logician
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/mitchellvitez/little-logician#readme>
+homepage:       https://github.com/mitchellvitez/little-logician#readme
+bug-reports:    https://github.com/mitchellvitez/little-logician/issues
+author:         Mitchell Vitez
+maintainer:     mitchell@vitez.me
+copyright:      2020 Mitchell Vitez
+license:        BSD3
+build-type:     Simple
+extra-source-files:
+    README.md
+
+source-repository head
+  type: git
+  location: https://github.com/mitchellvitez/little-logician
+
+library
+  exposed-modules:
+      Core
+      Lib
+      Parse
+      Reduce
+  other-modules:
+      Paths_little_logician
+  hs-source-dirs:
+      src
+  default-extensions: OverloadedStrings LambdaCase
+  build-depends:
+      base >=4.7 && <5
+    , containers >=0.6 && <1
+    , hspec >=2.7 && <3
+    , megaparsec >=8.0 && <9
+    , text >=1.2 && <2
+    , transformers >=0.5 && <1
+  default-language: Haskell2010
+
+executable little-logician-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_little_logician
+  hs-source-dirs:
+      app
+  default-extensions: OverloadedStrings LambdaCase
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      base >=4.7 && <5
+    , containers >=0.6 && <1
+    , hspec >=2.7 && <3
+    , little-logician
+    , megaparsec >=8.0 && <9
+    , text >=1.2 && <2
+    , transformers >=0.5 && <1
+  default-language: Haskell2010
